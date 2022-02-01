@@ -3,11 +3,12 @@ import PropTypes from "prop-types"
 import Button from "../Button/Button"
 import "./Card.css"
 import ButtonGroup from "../ButtonGroup/ButtonGroup"
+import CardProvider from "../CardProvider/CardProvider"
 
 // we could also destructure the props parameter
 const Card = (props) => {
   // WORKITEM image alt text from data
-  const { front_text, front_image, back_text, back_image, cardAdvanceHandler } =
+    const { front_text, front_image, back_text, back_image, cardAdvanceHandler, backHandler, index, size } =
     props.cardContent
 
   const frontContent = () => {
@@ -48,8 +49,8 @@ const Card = (props) => {
 
   const flipHandler = () => {
     setIsFront(!isFront)
-  }
-
+    }
+   
   return (
     <div className="flashcard-wrapper">
       <div className="card-surface">
@@ -59,20 +60,21 @@ const Card = (props) => {
       </div>
       <br />
       <ButtonGroup>
-      <Button buttonStyle="secondary" onClickHandler={flipHandler}>
-          Back
-        </Button>
+              {index !== 0 && <Button buttonStyle="primary" onClickHandler={backHandler}>
+                  Back
+                  
+        </Button>}
         <Button buttonStyle="primary" onClickHandler={flipHandler}>
           Flip
-        </Button>
-        <Button
-          buttonStyle="secondary"
-          onClickHandler={() => {
-            cardAdvanceHandler()
-          }}
-        >
-          Next
-        </Button>
+              </Button>
+              {index !== size-1 && <Button
+                  buttonStyle="secondary"
+                  onClickHandler={() => {
+                      cardAdvanceHandler()
+                  }}
+              >
+                  Next
+              </Button>}
       </ButtonGroup>
     </div>
   )
